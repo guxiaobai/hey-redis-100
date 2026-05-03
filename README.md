@@ -4,5 +4,5 @@
 
 ## Ref
 
-- <https://redis.io/>
+- <https://redis.io/open-source/>
 - <https://valkey.io/>
