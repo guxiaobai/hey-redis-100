@@ -1,18 +1,18 @@
 ---
-- hosts: metal
+- hosts: all
   vars:
     key: /etc/apt/keyrings/redis-archive-keyring.gpg
     version: 6:7.4.8-1rl1~noble1
 
   handlers:
-  - name: update apt cache
-    apt:
-      update_cache: yes
+    - name: restart redis
+      service: name=redis-server state=restarted
   
   tasks:
   - name: install dependencies
     apt:
-      name: [gpg]
+      name: 
+        - gpg
       state: present
 
   - name: Add Redis Key
@@ -36,3 +36,16 @@
         - "redis-server={{ version }}"
         - "redis-tools={{ version}}"
         # - "redis-sentinel={{ version }}"
+
+  - name: allow remote connect
+    ansible.builtin.lineinfile:
+      path: /etc/redis/redis.conf
+      regexp: '^bind'
+      line: 'bind 0.0.0.0'
+
+  - name: disable protected mode
+    ansible.builtin.lineinfile:
+      path: /etc/redis/redis.conf
+      regexp: '^protected-mode'
+      line: 'protected-mode no'
+    notify: restart redis

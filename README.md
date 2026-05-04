@@ -1,5 +1,7 @@
 ## Hey Redis 100
 
+>     TBD（To Be Determined）：待确定
+
 检查版本
 
 ```
@@ -38,7 +40,7 @@ requirepass password
 
 
 ```
-redis://192.168.100.63:6379/0
+redis://192.168.100.65:6379/0
 ```
 
 
@@ -52,5 +54,5 @@ auth yourpassword
 
 ## Ref
 
-- <https://redis.io/open-source/>
+- <https://redis.io/open-source/>、<https://redis.io/docs/latest/operate/oss_and_stack/management/config/>
 - <https://valkey.io/>
