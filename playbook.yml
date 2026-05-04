@@ -1,0 +1,38 @@
+---
+- hosts: metal
+  vars:
+    key: /etc/apt/keyrings/redis-archive-keyring.gpg
+    version: 6:7.4.8-1rl1~noble1
+
+  handlers:
+  - name: update apt cache
+    apt:
+      update_cache: yes
+  
+  tasks:
+  - name: install dependencies
+    apt:
+      name: [gpg]
+      state: present
+
+  - name: Add Redis Key
+    apt_key:
+      url: https://packages.redis.io/gpg
+      keyring: "{{ key }}"
+      state: present
+
+  - name: Add Redis Repo
+    apt_repository:
+      repo: "{{ item }}"
+      state: present
+      filename: redis
+    loop:
+      - deb [signed-by={{ key }}] https://packages.redis.io/deb {{ ansible_facts["distribution_release"] }} main
+  
+  - name: Install Redis
+    apt:
+      name:
+        - "redis={{ version }}"
+        - "redis-server={{ version }}"
+        - "redis-tools={{ version}}"
+        # - "redis-sentinel={{ version }}"

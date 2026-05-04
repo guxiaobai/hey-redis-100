@@ -1,6 +1,8 @@
 ## Hey Redis 100
 
-
+```
+redis-cli info
+```
 
 ## Ref
 
