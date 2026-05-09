@@ -9,12 +9,6 @@
       service: name=redis-server state=restarted
   
   tasks:
-  - name: install dependencies
-    apt:
-      name: 
-        - gpg
-      state: present
-
   - name: Add Redis Key
     apt_key:
       url: https://packages.redis.io/gpg
